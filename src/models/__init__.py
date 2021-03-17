@@ -15,37 +15,34 @@ metrics = ["accuracy",
            ]
 
 
-data_augmentation = tf.keras.Sequential(
-    [
-        layers.experimental.preprocessing.RandomContrast(0.3),
-        layers.experimental.preprocessing.RandomFlip("horizontal",
-                                                     input_shape=(img_size,
-                                                                  img_size,
-                                                                  3)),
-        layers.experimental.preprocessing.RandomRotation(0.3),
-        layers.experimental.preprocessing.RandomZoom(0.3),
-    ]
-)
-
-
-class GI_NET():
-    def __init__(self, categories, img_size = 224):
-        self.categories = categories
+class GI_NETv2():
+    def __init__(self, num_categories, img_size=224):
+        self.data_augmentation = tf.keras.Sequential(
+            [
+                layers.experimental.preprocessing.RandomContrast(0.3),
+                layers.experimental.preprocessing.RandomFlip("horizontal",
+                                                             input_shape=(img_size,
+                                                                          img_size,
+                                                                          3)),
+                layers.experimental.preprocessing.RandomRotation(0.3),
+                layers.experimental.preprocessing.RandomZoom(0.3),
+            ]
+        )
         self.densenet201 = applications.DenseNet201(
             include_top=False, weights="imagenet", input_shape=(img_size, img_size, 3))
         for layer in self.densenet201.layers:
             layer.trainable = True
         inputs = tf.keras.Input(shape=(img_size, img_size, 3))
-        augmented = data_augmentation(inputs)
+        augmented = self.data_augmentation(inputs)
         model_input = tf.keras.applications.densenet.preprocess_input(
             augmented)
-        output = self.densenet201(model_input)
-        x = tf.keras.layers.GlobalAveragePooling2D()(output)
+        self.densenet_output = self.densenet201(model_input)
+        x = tf.keras.layers.GlobalAveragePooling2D()(self.densenet_output)
         x = tf.keras.layers.Dense(128, activation="relu")(x)
         x = tf.keras.layers.Dropout(0.5)(x)
         x = tf.keras.layers.Dense(128, activation="relu")(x)
         predictions = tf.keras.layers.Dense(
-            len(self.categories), activation="softmax")(x)
+            num_categories, activation="softmax")(x)
 
         self.model = tf.keras.Model(inputs=inputs, outputs=predictions)
 
@@ -72,3 +69,6 @@ class GI_NET():
 
     def predict(self, x):
         return self.model.predict(x)
+
+    def save(self, save_dir):
+        self.model.save(save_dir)
