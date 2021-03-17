@@ -1,4 +1,4 @@
-from src.models import GI_NETv2
+from model import GI_NETv2
 import glob
 import tensorflow as tf
 import argparse
@@ -41,5 +41,6 @@ if __name__ == '__main__':
     parser.add_argument('--valsplit', default=0.2, type=float)
     args = parser.parse_args()
 
-    history, model = train_model(args.dataset, args.categories, args.savedir, args.imgsize, args.valsplit)
-    #code to save history plot to savedir
+    history, model = train_model(
+        args.dataset, args.categories, args.savedir, args.imgsize, args.valsplit)
+    # code to save history plot to savedir
