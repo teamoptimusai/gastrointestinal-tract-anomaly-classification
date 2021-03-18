@@ -50,11 +50,11 @@ class GI_NETv2():
         self.model.compile(loss="categorical_crossentropy", optimizer=optimizers.SGD(
             lr=0.001, momentum=0.9), metrics=metrics)
 
-    def fit(self, train_ds, val_ds):
+    def fit(self, train_ds, val_ds, interim_model_dir='./model.h5'):
         anne = ReduceLROnPlateau(
             monitor='val_accuracy', factor=0.5, patience=3, verbose=1, min_lr=1e-4)
         checkpoint = ModelCheckpoint(
-            './model.h5', verbose=1, save_best_only=True)
+            interim_model_dir, verbose=1, save_best_only=True)
         early_stopping = tf.keras.callbacks.EarlyStopping(
             monitor='val_loss', patience=5, restore_best_weights=True)
         history = self.model.fit(train_ds,
