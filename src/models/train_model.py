@@ -45,5 +45,5 @@ if __name__ == '__main__':
 
     history, model = train_model(
         args.dataset, args.categories, args.savedir, args.imgsize, args.valsplit, args.interimsavedir)
-    
+
     save_history(history)
