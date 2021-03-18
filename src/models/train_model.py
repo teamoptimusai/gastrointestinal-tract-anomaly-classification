@@ -1,3 +1,4 @@
+from src.visualization.visualize import save_history
 from model import GI_NETv2
 import glob
 import tensorflow as tf
@@ -44,4 +45,5 @@ if __name__ == '__main__':
 
     history, model = train_model(
         args.dataset, args.categories, args.savedir, args.imgsize, args.valsplit, args.interimsavedir)
-    # code to save history plot to savedir
+    
+    save_history(history)
