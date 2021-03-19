@@ -35,12 +35,18 @@ def train_model(dataset_dir, num_categories, save_dir='./trained_model.h5', img_
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Train the Model with yout dataset')
-    parser.add_argument('--dataset', required=True, type=str)
-    parser.add_argument('--categories', required=True, type=int)
-    parser.add_argument('--savedir', default='./trained_model.h5', type=str)
-    parser.add_argument('--interimsavedir', default='./model.h5', type=str)
-    parser.add_argument('--imgsize', default=224, type=int)
-    parser.add_argument('--valsplit', default=0.2, type=float)
+    parser.add_argument('--dataset', required=True, type=str,
+                        help="relative/absolute dir path to the dataset")
+    parser.add_argument('--categories', required=True,
+                        type=int, help="number of categories in the dataset")
+    parser.add_argument('--savedir', default='./trained_model.h5', type=str,
+                        help="relative/absolute path to the best-model.h5 (end with .h5 file format)")
+    parser.add_argument('--interimsavedir', default='./interim-model.h5', type=str,
+                        help="relative/absolute path to the interim-model.h5 (end with .h5 file format)")
+    parser.add_argument('--imgsize', default=224, type=int,
+                        help="image size to crop the images")
+    parser.add_argument('--valsplit', default=0.2, type=float,
+                        help="validation split ratio (default set to 0.2)")
     args = parser.parse_args()
 
     history, model = train_model(
