@@ -73,7 +73,8 @@ def make_dataset(dataset):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
         description='Download and Prepare Datasets')
-    parser.add_argument('--dataset', required=True, type=str)
+    parser.add_argument('--dataset', required=True, type=str, choices=[
+                        "Kvasir_Capsule", "Hyper_Kvasir", "Kvasir"], help="Dataset to download")
     args = parser.parse_args()
 
     make_dataset(args.dataset)
