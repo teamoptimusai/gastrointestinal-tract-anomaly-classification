@@ -1,4 +1,4 @@
-from src.visualization.visualize import save_history
+from visualize import save_history
 from model import GI_NETv2
 import glob
 import tensorflow as tf

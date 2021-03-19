@@ -1,10 +1,8 @@
-gastrointestinal-tract-anomaly-classification
-==============================
+# Gastrointestinal Tract Anomaly Classification
 
-A short description of the project.
+Classification of Gastrointestinal Tract Anamolies using pretained CNN models with different dataset distributions such as Kvasir, Hyper-Kvasir, Kvasir-Capsule.
 
-Project Organization
-------------
+## Project Organization
 
     ├── LICENSE
     ├── Makefile           <- Makefile with commands like `make data` or `make train`
@@ -41,17 +39,10 @@ Project Organization
     │   ├── features       <- Scripts to turn raw data into features for modeling
     │   │   └── build_features.py
     │   │
-    │   ├── models         <- Scripts to train models and then use trained models to make
-    │   │   │                 predictions
-    │   │   ├── predict_model.py
-    │   │   └── train_model.py
-    │   │
-    │   └── visualization  <- Scripts to create exploratory and results oriented visualizations
-    │       └── visualize.py
+    │   └── models         <- Scripts to train models and then use trained models to make
+    │       │                 predictions while saving predictions
+    │       ├── predict_model.py
+    │       └── train_model.py
+    │       └── visualize.py
     │
     └── tox.ini            <- tox file with settings for running tox; see tox.readthedocs.io
-
-
---------
-
-<p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>

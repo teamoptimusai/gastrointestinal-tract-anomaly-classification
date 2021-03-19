@@ -90,6 +90,8 @@ if __name__ == '__main__':
                         help="Do you want to save the outputs to a '.txt' file? (default True")
     parser.add_argument('--ncol', default=5, type=int,
                         help="Number of columns in the saved image")
+    parser.add_argument('--scaler', default=1.0, type=float,
+                        help="Scaling factor for the Prediction image (default 1)")
     args = parser.parse_args()
 
     for dataset_name in ["kvasir-capsule", "hyper-kvasir", "kvasir"]:
@@ -105,4 +107,5 @@ if __name__ == '__main__':
     predictions_argmax = tf.argmax(predictions, axis=-1).numpy().tolist()
 
     if args.save:
-        save_predictions(images, predictions_argmax, categories, args.ncol)
+        save_predictions(images, predictions_argmax,
+                         categories, args.ncol, args.scaler)
