@@ -95,14 +95,15 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     for dataset_name in ["kvasir-capsule", "hyper-kvasir", "kvasir"]:
-        if dataset_name in args.modeldir:
+        if dataset_name in args.modeldir.lower():
+            print("======== Chose {dataset_name} as the dataset ========")
             categories = categories_dict[dataset_name]
             break
 
     images, predictions = predict_model(
         args.modeldir, args.imagedir, args.image, args.imgsize)
 
-    # np.savetxt("results/predictions.csv", predictions, delimiter=",")
+    np.savetxt("predictions.csv", predictions, delimiter=",")
 
     predictions_argmax = tf.argmax(predictions, axis=-1).numpy().tolist()
 
