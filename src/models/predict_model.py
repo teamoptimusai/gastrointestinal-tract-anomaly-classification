@@ -54,6 +54,12 @@ categories_dict = {
 }
 
 
+def print_predictions(image_files, predictions):
+    for i, pred in enumerate(predictions):
+        perc_pred = [x * 100 for x in pred]
+        print(f'{image_files[i]} {perc_pred}')
+
+
 def predict_model(model_dir, image_dir=None, image_file=None, img_size=224):
     images = []
     if image_dir:
@@ -72,6 +78,10 @@ def predict_model(model_dir, image_dir=None, image_file=None, img_size=224):
     model = tf.keras.models.load_model(model_dir)
     images = np.array(images)
     predictions = model.predict(images)
+    if image_dir:
+        print_predictions(image_files, predictions)
+    elif image_file:
+        print_predictions([image_file], predictions)
     return images, predictions
 
 
@@ -86,8 +96,8 @@ if __name__ == '__main__':
                         help="Relative path to the image file (optional)")
     parser.add_argument('--imgsize', default=224, type=int,
                         help="Image size used in the model (default 224px)")
-    parser.add_argument('--save', default=True, type=bool,
-                        help="Do you want to save the outputs to a '.txt' file? (default True")
+    parser.add_argument('--save', default=False, type=bool,
+                        help="Mention if you want to save the outputs as a '.jpg' file")
     parser.add_argument('--ncol', default=5, type=int,
                         help="Number of columns in the saved image")
     parser.add_argument('--scaler', default=1.0, type=float,
@@ -96,7 +106,7 @@ if __name__ == '__main__':
 
     for dataset_name in ["kvasir-capsule", "hyper-kvasir", "kvasir"]:
         if dataset_name in args.modeldir.lower():
-            print("======== Chose {dataset_name} as the dataset ========")
+            print(f'======== Chose {dataset_name} as the dataset ========')
             categories = categories_dict[dataset_name]
             break
 
